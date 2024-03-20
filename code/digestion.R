@@ -22,11 +22,13 @@ digestion <- function(dirname) {
     result$K[i] <- str_contains(result$pep[i],"K")
     result$R[i] <- str_contains(result$pep[i],"R")
   }
-  count <- table(result$K)["TRUE"][["TRUE"]]+table(result$R)["TRUE"][["TRUE"]]
+
+  count <- table(result$K)["FALSE"][["FALSE"]] + table(result$R)["FALSE"][["FALSE"]]
+  count <- dim(result)[1]* 2 - count
   count_pre <- count
-  for(i in 1:dim(result)[1]){
-    if(result$K[i]&result$R[i]){
-      count <- count-1
+  for (i in 1:dim(result)[1]){
+    if (result$K[i] & result$R[i]){
+      count <- count - 1
     }
   }
   result_2 <- list(id = dirname,
